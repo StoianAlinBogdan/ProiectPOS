@@ -22,10 +22,16 @@ def books(ISBN):
     elif(request.method == 'DELETE'):
         return str(delete_book(ISBN))
     else:
-        books = model.get_book(ISBN)
+        books = get_book(ISBN)
         if len(books) > 0:
             return Response(str(books), status=200, mimetype='text/plain')
         return Response('', status=404)
+
+
+def get_book(ISBN):
+    params = get_params(request)
+    print(params)
+    return []
 
 
 def get_author(id):
