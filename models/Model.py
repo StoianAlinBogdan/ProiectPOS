@@ -46,3 +46,5 @@ def add_new_book(ISBN, title, publisher, year, genre):
         
     except mysql.connector.Error: 
         return 406
+
+
