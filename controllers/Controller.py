@@ -19,6 +19,8 @@ def books(ISBN):
         return str(add_new_book(ISBN))
     elif(request.method == 'PUT'):
         return str(replace_book(ISBN))
+    elif(request.method == 'DELETE'):
+        return str(delete_book(ISBN))
     else:
         books = model.get_book(ISBN)
         if len(books) > 0:
@@ -43,3 +45,15 @@ def replace_book(ISBN):
     params = get_params(request)
     code = model.replace_book(ISBN, params["title"], params["publisher"], params["year"], params['genre'])
     return code
+
+def delete_book(ISBN):
+    code = model.delete_book(ISBN)
+    return code
+
+
+def get_book_author(ISBN):
+    books = model.get_book_author(ISBN)
+    if len(books) > 0:
+        return Response(str(books), status=200, mimetype='text/plain')
+    else:
+        return Response('', status=404)
