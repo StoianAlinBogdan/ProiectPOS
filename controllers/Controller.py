@@ -12,9 +12,12 @@ def get_params(lrequest):
     dict['publisher'] = lrequest.args.get("publisher")
     dict['year'] = lrequest.args.get("year")
     dict['genre'] = lrequest.args.get("genre")
+    dict['page'] = lrequest.args.get("page")
+    dict['items_per_page'] = lrequest.args.get("items_per_page")
     return dict
 
 def books(ISBN):
+    print("Hi")
     if(request.method == 'POST'):
         return str(add_new_book(ISBN))
     elif(request.method == 'PUT'):
@@ -30,8 +33,8 @@ def books(ISBN):
 
 def get_book(ISBN):
     params = get_params(request)
-    print(params)
-    return []
+    return model.get_book(ISBN)
+    
 
 
 def get_author(id):
@@ -63,3 +66,17 @@ def get_book_author(ISBN):
         return Response(str(books), status=200, mimetype='text/plain')
     else:
         return Response('', status=404)
+
+
+def handle_search():
+    print("Search with pages or query")
+    params = get_params(request)
+    if(params['page']):
+        if(params['items_per_page']):
+            return Response(str(model.search_with_pages(params['page'], params['items_per_page'])), status=200, mimetype='text/plain')
+        else:
+            return Response(str(model.search_with_pages(params['page'])), status=200, mimetype='text/plain')
+    elif(params):
+        return Response(str(model.search_with_pages(queries={'title': params['title'], 'genre': params['genre'], 'year': params['year']})), status=200, mimetype='text/plain')
+    else:
+        return Response('???', status=404)

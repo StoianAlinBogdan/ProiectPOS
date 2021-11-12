@@ -95,3 +95,44 @@ def get_book_author(ISBN):
     except mysql.connector.Error as err:
         print("Eroare: {}".format(err))
         return []
+
+
+def search_with_pages(page=0, items_per_page=2, queries=None):
+    conn = my_database.mydb_manager
+    books = []
+    cursor = conn.cursor()
+    if(queries is None):
+        try:
+            cursor.execute("SELECT * FROM BOOKS")
+            for book in cursor:
+                books.append(book)
+            return books[page*items_per_page:(page+1)*items_per_page]
+        except mysql.connector.Error as err:
+            print("Eroare: {}".format(err))
+            return []
+    else:
+        try:
+            string = "SELECT * FROM BOOKS WHERE "
+            if(queries['title']):
+                if('=' in string):
+                    string = string + ' and TITLE=' + queries['title']
+                else:
+                    string = string + ' TITLE=' + queries['title']
+            if(queries['genre']):
+                if('=' in string):
+                    string = string + ' and GENRE=' + queries['genre']
+                else:
+                    string = string + ' GENRE= ' + queries['genre']
+            if(queries['year']):
+                if('=' in string):
+                    string = string + ' and YEAR= ' + queries['year']
+                else:
+                    string = string + ' GENRE= ' + queries['year']
+            cursor.execute(string)
+            for book in cursor:
+                books.append(book)
+            return books
+        except mysql.connector.Error as err:
+            print("Eroare: {}".format(err))
+            return []            
+            
