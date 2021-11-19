@@ -9,3 +9,4 @@ blueprint.route('/bookcollection/books/<string:ISBN>', methods=['GET', 'POST', '
 blueprint.route('/bookcollection/authors/<int:id>', methods=['GET'])(controller.get_author)
 blueprint.route('/bookcollection/books/<string:ISBN>/authors', methods=['GET'])(controller.get_book_author)
 blueprint.route('/bookcollection/books', methods=['GET'])(controller.handle_search)
+

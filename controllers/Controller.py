@@ -17,7 +17,6 @@ def get_params(lrequest):
     return dict
 
 def books(ISBN):
-    print("Hi")
     if(request.method == 'POST'):
         return str(add_new_book(ISBN))
     elif(request.method == 'PUT'):

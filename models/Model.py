@@ -1,4 +1,8 @@
 import mysql.connector
+import pymongo
+
+
+
 
 class my_database:
     mydb_manager = mysql.connector.connect(
@@ -15,6 +19,9 @@ class my_database:
         # database='mydb', # asta n-are acces inca
         password='Admin123'
     )
+
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    mydb =  myclient["mydatabase"]
 
 def get_book(ISBN):
     conn = my_database.mydb_manager
