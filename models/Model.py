@@ -23,6 +23,29 @@ class my_database:
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     mydb =  myclient["mydatabase"]
 
+
+def get_all_books():
+    conn = my_database.mydb_manager
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM BOOKS')
+    books = []
+    for book in cursor:
+        books.append(book)
+    cursor.close()
+    return books
+
+
+def get_all_authors():
+    conn = my_database.mydb_manager
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM AUTHORS')
+    authors = []
+    for author in cursor:
+        authors.append(author)
+    cursor.close()
+    return authors
+
+
 def get_book(ISBN):
     conn = my_database.mydb_manager
     cursor = conn.cursor()

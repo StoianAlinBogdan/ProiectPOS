@@ -1,6 +1,11 @@
 from typing import get_args
 import models.Model as model
 from flask import Response, request
+import view.View as view
+
+'''
+    tot codul asta: https://pbs.twimg.com/media/DpPJAOoUcAAxZa4.jpg
+'''
 
 def index():
     return "Hello World!"
@@ -17,7 +22,9 @@ def get_params(lrequest):
     return dict
 
 def books(ISBN):
-    if(request.method == 'POST'):
+    if(request.method == 'OPTIONS'):
+        return handle_options_books()
+    elif(request.method == 'POST'):
         return str(add_new_book(ISBN))
     elif(request.method == 'PUT'):
         return str(replace_book(ISBN))
@@ -68,6 +75,8 @@ def get_book_author(ISBN):
 
 
 def handle_search():
+    if(request.method == "OPTIONS"):
+        return handle_options_books()
     print("Search with pages or query")
     params = get_params(request)
     if(params['page']):
@@ -79,3 +88,18 @@ def handle_search():
         return Response(str(model.search_with_pages(queries={'title': params['title'], 'genre': params['genre'], 'year': params['year']})), status=200, mimetype='text/plain')
     else:
         return Response('???', status=404)
+
+
+def handle_options_bookcollection():
+    yaml = view.describe_bookcollection()
+    return Response(str(yaml), status=200)
+
+
+def handle_options_books():
+    yaml = view.describe_books()
+    return Response(str(yaml), status=200)
+
+
+def handle_options_authors():
+    yaml = view.describe_authors()
+    return Response(str(yaml), status=200)
