@@ -4,7 +4,7 @@ from flask import Response, request
 import view.View as view
 
 '''
-    tot codul asta: https://pbs.twimg.com/media/DpPJAOoUcAAxZa4.jpg
+    tot codul asta: https://pbs.twimg.com/media/DpPJAOoUcAAxZa4.jpg 🤡🤡🤡
 '''
 
 def index():
