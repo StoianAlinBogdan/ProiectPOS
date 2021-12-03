@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 import controllers.Controller as controller
+import controllers.Controller2 as controller2
 
 blueprint = Blueprint('blueprint', __name__)
 
@@ -11,3 +12,5 @@ blueprint.route('/bookcollection/books/<string:ISBN>/authors', methods=['GET'])(
 blueprint.route('/bookcollection/books', methods=['GET', 'OPTIONS'])(controller.handle_search)
 blueprint.route('/bookcollection', methods=['OPTIONS'])(controller.handle_options_bookcollection)
 blueprint.route('/bookcollection/authors', methods=['OPTIONS'])(controller.handle_options_authors)
+
+blueprint.route('/bookcollection/order/<string:ISBN>', methods=['POST'])(controller2.handle_order)

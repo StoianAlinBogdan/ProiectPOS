@@ -1,5 +1,5 @@
 import mysql.connector
-import pymongo
+
 
 
 
@@ -20,8 +20,6 @@ class my_database:
         password='Admin123'
     )
 
-    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-    mydb =  myclient["mydatabase"]
 
 
 def get_all_books():
