@@ -1,4 +1,5 @@
 from apispec import APISpec
+import apispec
 from apispec_webframeworks.flask import FlaskPlugin
 from yaml import add_implicit_resolver
 
@@ -11,8 +12,9 @@ def describe_bookcollection():
         openapi_version="3.0.3",
         plugins=[FlaskPlugin()],
         info=dict(
-            description="rute disponibile: /books, /authors"
-        )
+            description="Informatii pentru rute disponibile"
+        ),
+        paths="/books, /authors"
     )
     return spec.to_yaml()
 
@@ -38,6 +40,7 @@ def describe_authors():
         plugins=[FlaskPlugin()],
         info=dict(
             authors=str(model.get_all_authors())
-        )
+        ),
+        paths="/{id}"
     )
     return spec.to_yaml()
